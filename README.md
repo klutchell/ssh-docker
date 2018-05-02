@@ -1,6 +1,6 @@
 # resin-ssh
 
-[ssh](https://www.ssh.com/ssh/) service for [resin.io](https://resin.io/) stacks.
+[ssh](https://www.ssh.com/ssh/) service for [resin.io](https://resin.io/) stacks
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ volumes:
 
 services:
   ssh:
-    build: ./ssh
+    image: klutchell/resin-ssh
     ports:
       - '22:22'
     volumes:
