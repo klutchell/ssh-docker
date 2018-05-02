@@ -5,7 +5,6 @@ RUN [ "cross-build-start" ]
 
 # set timezone
 RUN apk add --no-cache tzdata
-ENV TZ=America/Toronto
 
 # install git, openssh, and rsync
 RUN apk add --no-cache \
