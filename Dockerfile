@@ -1,5 +1,8 @@
 FROM resin/raspberrypi3-alpine
 
+# allow building on x86
+RUN [ "cross-build-start" ]
+
 # set timezone
 RUN apk add --no-cache tzdata
 ENV TZ=America/Toronto
@@ -23,4 +26,7 @@ COPY start.sh /usr/bin/start.sh
 
 # run start script to generate keys if required
 CMD [ "/usr/bin/start.sh" ]
+
+# end cross build
+RUN [ "cross-build-end" ]
 
