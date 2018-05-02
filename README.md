@@ -9,31 +9,19 @@
 
 ## Deployment
 
-```yaml
-# example docker-compose.yml
-version: '2.1'
-
-volumes:
-  ssh-data:
-
-services:
-  ssh:
-    image: klutchell/resin-ssh
-    ports:
-      - '22:22'
-    volumes:
-      - 'ssh-data:/root/.ssh'
+```bash
+docker run --name ssh \
+-v ssh-data:/root/.ssh \
+-p 22:22 \
+-e TZ=America/Toronto \
+klutchell/resin-ssh
 ```
 
 ## Usage
 
 1. use the `ssh` [resin web terminal](https://docs.resin.io/learn/manage/ssh-access/#using-the-dashboard-web-terminal)
 to add public keys to `/root/.ssh/authorized_keys`
-2. connect to secure shell as `root` on port `22`:
-```bash
-# example
-ssh root@192.168.1.101:22
-```
+2. connect to `root@<device-ip>:22` for secure shell access
 
 ## Author
 

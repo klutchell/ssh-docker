@@ -1,16 +1,15 @@
 FROM resin/raspberrypi3-alpine
 
+LABEL maintainer="kylemharding@gmail.com"
+
 # allow building on x86
 RUN [ "cross-build-start" ]
-
-# set timezone with TZ
-# eg. TZ=America/Toronto
-RUN apk add --no-cache tzdata
 
 # install git, openssh, and rsync
 RUN apk add --no-cache \
 	openssh \
-	rsync
+	rsync \
+	tzdata
 
 # adjust sshd config
 RUN sed -i \
