@@ -1,4 +1,4 @@
-FROM resin/raspberrypi3-alpine
+FROM resin/raspberrypi3-alpine:3.6
 
 LABEL maintainer="kylemharding@gmail.com"
 
