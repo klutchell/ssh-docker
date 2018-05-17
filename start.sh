@@ -19,7 +19,7 @@ then
 
 Host *
 	StrictHostKeyChecking no
-	UserKnownHostsFile /dev/null"
+	UserKnownHostsFile /dev/null
 
 EOF
 fi
