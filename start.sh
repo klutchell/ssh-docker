@@ -1,40 +1,18 @@
 #!/bin/sh
 
-# create ssh dir if it doesn't exist
-if [ ! -d "${HOME}/.ssh" ]
-then
-	mkdir -p "${HOME}/.ssh"
-fi
-
 # generate ssh key if one does not exist
-if [ ! -f "${HOME}/.ssh/id_rsa" ]
+if [ ! -f "/root/.ssh/id_rsa" ]
 then
-	ssh-keygen -q -t "rsa" -N '' -f "${HOME}/.ssh/id_rsa" -C "$(id -un)@$(hostname) $(date)"
-fi
-
-# generate ssh config file to prevent caching known hosts
-if [ ! -f "${HOME}/.ssh/config" ]
-then
-	cat <<EOF >> "${HOME}/.ssh/config"
-
-Host *
-	StrictHostKeyChecking no
-	UserKnownHostsFile /dev/null
-
-EOF
+	ssh-keygen -N '' -f "/root/.ssh/id_rsa"
 fi
 
 # set permissions on ssh dir
-chown -R root:root "${HOME}/.ssh"
-chmod -R 700 "${HOME}/.ssh"
+chown -R root:root "/root/.ssh"
+chmod -R 700 "/root/.ssh"
 
 # generate ssh host keys
 /usr/bin/ssh-keygen -A
 
 # start ssh service
-if [ "$INITSYSTEM" != "on" ]
-then
-	/usr/sbin/sshd -p 22 -D
-else
-	rc-service sshd start
-fi
+/usr/sbin/sshd -p 22 -D
+

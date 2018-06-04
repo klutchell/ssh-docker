@@ -17,11 +17,21 @@ RUN sed -i \
 	-e 's/#GatewayPorts no/GatewayPorts yes/' \
 	/etc/ssh/sshd_config
 
-WORKDIR /usr/src/app
-COPY . /usr/src/app/
+WORKDIR /root/.ssh
+
+# prevent caching known hosts
+RUN echo -e \
+	"Host *\n\
+	StrictHostKeyChecking no\n\
+	UserKnownHostsFile /dev/null" \
+	> config
 
 # store ssh data in a volume
 VOLUME /root/.ssh
+
+# copy src files
+WORKDIR /usr/src/app
+COPY . /usr/src/app/
 
 # run start script on boot
 CMD ["/bin/sh", "start.sh"]
