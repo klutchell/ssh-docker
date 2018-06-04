@@ -17,14 +17,14 @@ RUN sed -i \
 	-e 's/#GatewayPorts no/GatewayPorts yes/' \
 	/etc/ssh/sshd_config
 
+WORKDIR /usr/src/app
+COPY . /usr/src/app/
+
 # store ssh data in a volume
 VOLUME /root/.ssh
 
-# install start script
-COPY start.sh /usr/bin/start.sh
-
 # run start script on boot
-CMD [ "/usr/bin/start.sh" ]
+CMD ["/bin/sh", "start.sh"]
 
 # end cross build
 RUN [ "cross-build-end" ]
