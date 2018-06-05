@@ -1,29 +1,34 @@
 # resin-ssh
 
-[ssh](https://www.ssh.com/ssh/) service for [resin.io](https://resin.io/) stacks
+[ssh](https://www.ssh.com/ssh/) docker images
 
 ## Build
 
 ```bash
-make build
-docker login
-make push
+# build for rpi3
+make build-rpi3
 ```
 
 ## Deploy
 
 ```bash
+# deploy on rpi3
 docker run --name ssh \
 -v ssh-data:/root/.ssh \
 -p 22:22 \
 -e TZ=America/Toronto \
-klutchell/resin-ssh
+klutchell/ssh:rpi3-latest
 ```
+
+## Parameters
+
+* `-v ssh-data:/root/.ssh` - persistent data volume
+* `-p 22:22` - ports to expose
+* `-e TZ=America/Toronto` - local timezone
 
 ## Usage
 
-use the [resin web terminal](https://docs.resin.io/learn/manage/ssh-access/#using-the-dashboard-web-terminal)
-to add public keys to `/root/.ssh/authorized_keys`
+* add public keys to `/root/.ssh/authorized_keys`
 
 ## Author
 
