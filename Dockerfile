@@ -17,17 +17,14 @@ RUN sed -i \
 	-e 's/#GatewayPorts no/GatewayPorts yes/' \
 	/etc/ssh/sshd_config
 
-WORKDIR /root/.ssh
-
-# prevent caching known hosts
-RUN echo -e \
-	"Host *\n\
-	StrictHostKeyChecking no\n\
-	UserKnownHostsFile /dev/null" \
-	> config
-
 # store ssh data in a volume
 VOLUME /root/.ssh
+
+# prevent caching known hosts
+RUN echo -e "Host *\n\
+	StrictHostKeyChecking no\n\
+	UserKnownHostsFile /dev/null" \
+	> /root/.ssh/config
 
 # copy src files
 WORKDIR /usr/src/app
