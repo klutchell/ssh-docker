@@ -2,12 +2,15 @@
 
 [ssh](https://www.ssh.com/ssh/) service for [resin.io](https://resin.io/) stacks
 
-## Getting Started
+## Build
 
-* https://docs.resin.io/learn/getting-started
-* https://www.ssh.com/ssh/#sec-Running-amp-configuring-SSH
+```bash
+make build
+docker login
+make push
+```
 
-## Deployment
+## Deploy
 
 ```bash
 docker run --name ssh \
@@ -19,9 +22,8 @@ klutchell/resin-ssh
 
 ## Usage
 
-1. use the `ssh` [resin web terminal](https://docs.resin.io/learn/manage/ssh-access/#using-the-dashboard-web-terminal)
+use the [resin web terminal](https://docs.resin.io/learn/manage/ssh-access/#using-the-dashboard-web-terminal)
 to add public keys to `/root/.ssh/authorized_keys`
-2. connect to `root@<device-ip>:22` for secure shell access
 
 ## Author
 
