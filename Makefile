@@ -5,27 +5,31 @@ IMG		:= ${NS}/${REPO}
 
 build:
 	@docker build -t ${IMG}:${TAG} .
+	@docker tag ${IMG}:${TAG} ${IMG}:latest
 
 build-rpi3:
 	@docker build -t ${IMG}:rpi3-${TAG} -f Dockerfile.rpi3 .
+	@docker tag ${IMG}:rpi3-${TAG} ${IMG}:rpi3-latest
 
 build-nc:
 	@docker build --no-cache -t ${IMG} .
+	@docker tag ${IMG}:${TAG} ${IMG}:latest
 
 build-rpi3-nc:
 	@docker build --no-cache -t ${IMG}:rpi3-${TAG} -f Dockerfile.rpi3 .
+	@docker tag ${IMG}:rpi3-${TAG} ${IMG}:rpi3-latest
 
 push:
-	@docker push ${IMG}:${TAG}
+	@docker push ${IMG}:${TAG} ${IMG}:latest
 
 push-rpi3:
-	@docker push ${IMG}:rpi3-${TAG}
+	@docker push ${IMG}:rpi3-${TAG} ${IMG}:rpi3-latest
 
-release: build
-	make push
+release: build tag push
 
-release-rpi3: build-rpi3
-	make push-rpi3
+release-rpi3: build-rpi3 push-rpi3
+
+rpi3: build-rpi3
 
 default: build
 
