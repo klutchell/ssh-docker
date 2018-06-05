@@ -20,10 +20,12 @@ build-rpi3-nc:
 	@docker tag ${IMG}:rpi3-${TAG} ${IMG}:rpi3-latest
 
 push:
-	@docker push ${IMG}:${TAG} ${IMG}:latest
+	@docker push ${IMG}:${TAG}
+	@docker push ${IMG}:latest
 
 push-rpi3:
-	@docker push ${IMG}:rpi3-${TAG} ${IMG}:rpi3-latest
+	@docker push ${IMG}:rpi3-${TAG}
+	@docker push ${IMG}:rpi3-latest
 
 release: build tag push
 
