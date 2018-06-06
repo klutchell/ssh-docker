@@ -27,6 +27,9 @@ push-rpi3:
 	@docker push ${IMG}:rpi3-${TAG}
 	@docker push ${IMG}:rpi3-latest
 
+tag:
+	@git tag -a ${TAG} -m "tagging commit ${TAG}"
+
 release: build tag push
 
 release-rpi3: build-rpi3 push-rpi3
