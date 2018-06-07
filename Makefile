@@ -3,8 +3,8 @@ DOCKER_REPO		:= klutchell/ssh
 ARCH			:= armhf
 VERSION			:= $$(cat ./VERSION)
 BUILD_DATE		:= $$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-IMAGE_NAME		:= ${DOCKER_REPO}:${TARGET}-${VERSION}
-DOCKERFILE_PATH	:= ./${TARGET}/Dockerfile
+IMAGE_NAME		:= ${DOCKER_REPO}:${ARCH}-${VERSION}
+DOCKERFILE_PATH	:= ./${ARCH}/Dockerfile
 
 .DEFAULT_GOAL	:= build
 
@@ -34,6 +34,5 @@ tag:
 push:
 	docker push ${IMAGE_NAME}
 
-release: bump
-	make build push
+release: bump build push
 
