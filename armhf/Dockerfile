@@ -10,6 +10,9 @@ LABEL maintainer="kylemharding@gmail.com"
 # allow building on x86
 RUN [ "cross-build-start" ]
 
+# enable openrc
+ENV INITSYSTEM on
+
 # install git, openssh, and rsync
 RUN apk add --no-cache \
 	openssh \

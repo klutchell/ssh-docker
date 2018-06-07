@@ -13,6 +13,12 @@ chmod -R 700 "/root/.ssh"
 # generate ssh host keys
 /usr/bin/ssh-keygen -A
 
-# start ssh service
-/usr/sbin/sshd -p 22 -D
-
+# start sshd service
+if [ "${INITSYSTEM}" != "on" ]
+then
+	# start sshd service in foreground
+	/usr/sbin/sshd -p 22 -D
+else
+	# start sshd with openrc
+	rc-service sshd start
+fi
