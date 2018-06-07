@@ -1,0 +1,7 @@
+#!/bin/bash -xe
+. ./hooks/env
+CID=$(docker run -d $IMAGE_NAME)
+sleep 10s
+LOGS="$(docker logs $CID)"
+docker rm -f $CID
+echo $LOGS | grep -iq 'generating new host keys'

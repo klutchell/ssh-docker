@@ -1,0 +1,16 @@
+#!/bin/bash -xe
+. ./hooks/env
+docker build ${1} \
+	--build-arg "SOURCE_BRANCH=${SOURCE_BRANCH}" \
+	--build-arg "SOURCE_COMMIT=${SOURCE_COMMIT}" \
+	--build-arg "SOURCE_TAG=${SOURCE_TAG}" \
+	--build-arg "COMMIT_MSG=${COMMIT_MSG}" \
+	--build-arg "DOCKER_REPO=${DOCKER_REPO}" \
+	--build-arg "DOCKERFILE_PATH=${DOCKERFILE_PATH}" \
+	--build-arg "CACHE_TAG=${CACHE_TAG}" \
+	--build-arg "IMAGE_NAME=${IMAGE_NAME}" \
+	--build-arg "VERSION=${VERSION}" \
+	--build-arg "BUILD_DATE=${BUILD_DATE}" \
+	--tag ${IMAGE_NAME} \
+	--file ${DOCKERFILE_PATH} \
+	.

@@ -1,5 +1,17 @@
 FROM resin/raspberrypi3-alpine:3.6
 
+ARG SOURCE_BRANCH
+ARG SOURCE_COMMIT
+ARG SOURCE_TAG
+ARG COMMIT_MSG
+ARG DOCKER_REPO
+ARG DOCKERFILE_PATH
+ARG CACHE_TAG
+ARG IMAGE_NAME
+ARG BUILD_DATE
+ARG VERSION
+
+LABEL build_version="version: ${VERSION} build-date: ${BUILD_DATE}"
 LABEL maintainer="kylemharding@gmail.com"
 
 # allow building on x86
@@ -28,7 +40,7 @@ RUN echo -e "Host *\n\
 
 # copy src files
 WORKDIR /usr/src/app
-COPY . /usr/src/app/
+COPY start.sh VERSION ./
 
 # run start script on boot
 CMD ["/bin/sh", "start.sh"]
