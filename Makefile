@@ -16,5 +16,5 @@ tag:
 push:
 	./hooks/push
 
-release: bump tag build push
+release: bump build push
 

@@ -3,7 +3,6 @@
 docker build ${1} \
 	--build-arg "SOURCE_BRANCH=${SOURCE_BRANCH}" \
 	--build-arg "SOURCE_COMMIT=${SOURCE_COMMIT}" \
-	--build-arg "SOURCE_TAG=${SOURCE_TAG}" \
 	--build-arg "COMMIT_MSG=${COMMIT_MSG}" \
 	--build-arg "DOCKER_REPO=${DOCKER_REPO}" \
 	--build-arg "DOCKERFILE_PATH=${DOCKERFILE_PATH}" \
