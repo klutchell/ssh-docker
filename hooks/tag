@@ -1,4 +1,0 @@
-#!/bin/bash -xe
-. ./hooks/env
-git tag ${VERSION} -m "tagging build ${VERSION}"
-git push --tags

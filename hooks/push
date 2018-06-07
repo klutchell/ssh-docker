@@ -1,3 +1,0 @@
-#!/bin/bash -xe
-. ./hooks/env
-docker push ${IMAGE_NAME}

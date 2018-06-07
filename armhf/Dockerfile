@@ -1,16 +1,10 @@
 FROM resin/raspberrypi3-alpine:3.6
 
-ARG SOURCE_BRANCH
-ARG SOURCE_COMMIT
-ARG COMMIT_MSG
-ARG DOCKER_REPO
-ARG DOCKERFILE_PATH
-ARG CACHE_TAG
-ARG IMAGE_NAME
 ARG BUILD_DATE
-ARG VERSION
+ARG VERSION=latest
 
-LABEL build_version="version: ${VERSION} build-date: ${BUILD_DATE}"
+LABEL build_version="${VERSION}"
+LABEL build_date="${BUILD_DATE}"
 LABEL maintainer="kylemharding@gmail.com"
 
 # allow building on x86
