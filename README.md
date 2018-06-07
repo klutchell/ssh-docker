@@ -5,19 +5,17 @@
 ## Build
 
 ```bash
-# build for rpi3
-make build-rpi3
+make build ARCH=armhf
 ```
 
 ## Deploy
 
 ```bash
-# deploy on rpi3
 docker run --name ssh \
 -v ssh-data:/root/.ssh \
 -p 22:22 \
 -e TZ=America/Toronto \
-klutchell/ssh:rpi3-latest
+klutchell/ssh:armhf-latest
 ```
 
 ## Parameters

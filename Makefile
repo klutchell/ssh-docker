@@ -4,6 +4,7 @@ ARCH			:= armhf
 VERSION			:= $$(cat ./VERSION)
 BUILD_DATE		:= $$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 IMAGE_NAME		:= ${DOCKER_REPO}:${ARCH}-${VERSION}
+LATEST_NAME		:= ${DOCKER_REPO}:${ARCH}-latest
 DOCKERFILE_PATH	:= ./${ARCH}/Dockerfile
 
 .DEFAULT_GOAL	:= build
@@ -18,6 +19,7 @@ build:
 	--tag ${IMAGE_NAME} \
 	--file ${DOCKERFILE_PATH} \
 	.
+	@docker tag ${IMAGE_NAME} ${LATEST_NAME}
 
 build-nc:
 	@docker build --no-cache
@@ -26,13 +28,10 @@ build-nc:
 	--tag ${IMAGE_NAME} \
 	--file ${DOCKERFILE_PATH} \
 	.
-
-tag:
-	@git tag ${VERSION} -m "tagging build ${VERSION}"
-	git push --tags
+	@docker tag ${IMAGE_NAME} ${LATEST_NAME}
 
 push:
-	docker push ${IMAGE_NAME}
+	@docker push ${IMAGE_NAME}
 
 release: bump build push
 
