@@ -13,7 +13,7 @@ RUN apk add --no-cache openssh tzdata
 # persist ssh data
 VOLUME /root/.ssh
 
-# disable password auth and allow gateway ports
+# disable password auth
 RUN sed -i \
 	-e 's/#PasswordAuthentication yes/PasswordAuthentication no/' \
 	/etc/ssh/sshd_config
