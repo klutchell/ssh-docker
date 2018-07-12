@@ -16,7 +16,6 @@ VOLUME /root/.ssh
 # disable password auth and allow gateway ports
 RUN sed -i \
 	-e 's/#PasswordAuthentication yes/PasswordAuthentication no/' \
-	-e 's/#GatewayPorts no/GatewayPorts yes/' \
 	/etc/ssh/sshd_config
 
 # prevent caching known hosts
