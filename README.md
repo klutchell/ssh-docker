@@ -5,24 +5,28 @@
 ## Build
 
 ```bash
-make build ARCH=armhf
+# build for x86_64
+make
+
+# build for armhf
+make armhf
 ```
 
 ## Deploy
 
 ```bash
 docker run --name ssh \
--v ssh-data:/root/.ssh \
--p 22:22 \
--e TZ=America/Toronto \
-klutchell/ssh:armhf-latest
+    -v ssh_data:/root/.ssh \
+    -p 22:22 \
+    -e TZ=America/Toronto \
+    klutchell/ssh
 ```
 
-## Parameters
+## Environment
 
-* `-v ssh-data:/root/.ssh` - persistent data volume
-* `-p 22:22` - ports to expose
-* `-e TZ=America/Toronto` - local timezone
+|Name|Description|Example|
+|---|---|---|
+|`TZ`|(optional) container timezone|`America/Toronto`|
 
 ## Usage
 
