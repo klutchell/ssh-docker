@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+    ssh:
+        image: klutchell/ssh
+        ports:
+            - '22:22'
+        restart: unless-stopped
+        volumes:
+            - 'ssh_data:/root/.ssh'
+        environment:
+            - 'TZ=America/Toronto'
+
+volumes:
+
+    ssh_data:

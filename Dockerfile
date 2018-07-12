@@ -1,32 +1,23 @@
-FROM resin/raspberrypi3-alpine:3.6
+FROM alpine:3.6
 
 ARG BUILD_DATE
-ARG VERSION=latest
+ARG BUILD_VERSION
 
-LABEL build_version="${VERSION}"
+LABEL build_version="${BUILD_VERSION}"
 LABEL build_date="${BUILD_DATE}"
 LABEL maintainer="kylemharding@gmail.com"
 
-# allow building on x86
-RUN [ "cross-build-start" ]
+# install openssh and tzdata
+RUN apk add --no-cache openssh tzdata
 
-# enable openrc
-ENV INITSYSTEM on
+# persist ssh data
+VOLUME /root/.ssh
 
-# install git, openssh, and rsync
-RUN apk add --no-cache \
-	openssh \
-	rsync \
-	tzdata
-
-# adjust sshd config
+# disable password auth and allow gateway ports
 RUN sed -i \
 	-e 's/#PasswordAuthentication yes/PasswordAuthentication no/' \
 	-e 's/#GatewayPorts no/GatewayPorts yes/' \
 	/etc/ssh/sshd_config
-
-# store ssh data in a volume
-VOLUME /root/.ssh
 
 # prevent caching known hosts
 RUN echo -e "Host *\n\
@@ -34,13 +25,11 @@ RUN echo -e "Host *\n\
 	UserKnownHostsFile /dev/null" \
 	> /root/.ssh/config
 
-# copy src files
+# work in app dir
 WORKDIR /usr/src/app
-COPY start.sh VERSION ./
+
+# copy src files
+COPY start.sh ./
 
 # run start script on boot
 CMD ["/bin/sh", "start.sh"]
-
-# end cross build
-RUN [ "cross-build-end" ]
-

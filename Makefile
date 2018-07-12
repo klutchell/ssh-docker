@@ -1,37 +1,52 @@
 
 DOCKER_REPO		:= klutchell/ssh
-ARCH			:= armhf
-VERSION			:= $$(cat ./VERSION)
+BUILD_VERSION	:= $$(git describe --tags --long --dirty --always)
 BUILD_DATE		:= $$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-IMAGE_NAME		:= ${DOCKER_REPO}:${ARCH}-${VERSION}
-LATEST_NAME		:= ${DOCKER_REPO}:${ARCH}-latest
-DOCKERFILE_PATH	:= ./${ARCH}/Dockerfile
 
 .DEFAULT_GOAL	:= build
 
-bump:
-	@docker run --rm -v "${PWD}":/app treeder/bump patch
+tag-major: VERSION	:= $$(docker run --rm treeder/bump --input "$$(git describe --tags)" major)
+tag-major:
+	@git tag -a ${VERSION} -m "version ${VERSION}"
+	@git push --tags
+
+tag-minor: VERSION	:= $$(docker run --rm treeder/bump --input "$$(git describe --tags)" minor)
+tag-minor:
+	@git tag -a ${VERSION} -m "version ${VERSION}"
+	@git push --tags
+
+tag-patch: VERSION	:= $$(docker run --rm treeder/bump --input "$$(git describe --tags)" patch)
+tag-patch:
+	@git tag -a ${VERSION} -m "version ${VERSION}"
+	@git push --tags
+
+tag:	tag-patch
 
 build:
-	@docker build \
-	--build-arg "VERSION=${VERSION}" \
-	--build-arg "BUILD_DATE=${BUILD_DATE}" \
-	--tag ${IMAGE_NAME} \
-	--file ${DOCKERFILE_PATH} \
-	.
-	@docker tag ${IMAGE_NAME} ${LATEST_NAME}
+	BUILD_VERSION=${BUILD_VERSION} BUILD_DATE=${BUILD_DATE} IMAGE_NAME=${DOCKER_REPO}:${BUILD_VERSION} DOCKERFILE_PATH=Dockerfile ./hooks/build
+	@docker tag ${DOCKER_REPO}:${BUILD_VERSION} ${DOCKER_REPO}:latest
 
 build-nc:
-	@docker build --no-cache
-	--build-arg "VERSION=${VERSION}" \
-	--build-arg "BUILD_DATE=${BUILD_DATE}" \
-	--tag ${IMAGE_NAME} \
-	--file ${DOCKERFILE_PATH} \
-	.
-	@docker tag ${IMAGE_NAME} ${LATEST_NAME}
+	BUILD_VERSION=${BUILD_VERSION} BUILD_DATE=${BUILD_DATE} IMAGE_NAME=${DOCKER_REPO}:${BUILD_VERSION} DOCKERFILE_PATH=Dockerfile ./hooks/build --no-cache
+	@docker tag ${DOCKER_REPO}:${BUILD_VERSION} ${DOCKER_REPO}:latest
+
+build-armhf:
+	BUILD_VERSION=${BUILD_VERSION} BUILD_DATE=${BUILD_DATE} IMAGE_NAME=${DOCKER_REPO}:armhf-${BUILD_VERSION} DOCKERFILE_PATH=Dockerfile.armhf ./hooks/build
+	@docker tag ${DOCKER_REPO}:armhf-${BUILD_VERSION} ${DOCKER_REPO}:armhf-latest
+
+build-armhf-nc:
+	BUILD_VERSION=${BUILD_VERSION} BUILD_DATE=${BUILD_DATE} IMAGE_NAME=${DOCKER_REPO}:armhf-${BUILD_VERSION} DOCKERFILE_PATH=Dockerfile.armhf ./hooks/build --no-cache
+	@docker tag ${DOCKER_REPO}:armhf-${BUILD_VERSION} ${DOCKER_REPO}:armhf-latest
 
 push:
-	@docker push ${IMAGE_NAME}
+	@docker push ${DOCKER_REPO}:${BUILD_VERSION}
 
-release: bump build push
+push-armhf:
+	@docker push ${DOCKER_REPO}:armhf-${BUILD_VERSION}
+
+release:		build push
+
+release-armhf:	build-armhf push-armhf
+
+armhf:			build-armhf
 
