@@ -34,7 +34,7 @@ add public keys to `/root/.ssh/authorized_keys`
 
 ```bash
 # example
-curl -sSL https://github.com/{your-github-username}.keys >> ~/.ssh/authorized_keys
+curl -sSL https://github.com/{your-github-username}.keys >> /root/.ssh/authorized_keys
 ```
 
 ## Author
