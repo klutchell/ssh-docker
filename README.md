@@ -18,7 +18,6 @@ make armhf
 docker run --name ssh \
     -v ssh_data:/root/.ssh \
     -p 22:22 \
-    -e TZ=America/Toronto \
     klutchell/ssh
 ```
 
@@ -26,7 +25,7 @@ docker run --name ssh \
 
 |Name|Description|Example|
 |---|---|---|
-|`TZ`|(optional) container timezone|`America/Toronto`|
+|`TZ`|container timezone|`America/Toronto`|
 
 ## Usage
 
