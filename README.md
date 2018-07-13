@@ -30,7 +30,12 @@ docker run --name ssh \
 
 ## Usage
 
-* add public keys to `/root/.ssh/authorized_keys`
+add public keys to `/root/.ssh/authorized_keys`
+
+```bash
+# example
+curl -sSL https://github.com/{your-github-username}.keys >> ~/.ssh/authorized_keys
+```
 
 ## Author
 
