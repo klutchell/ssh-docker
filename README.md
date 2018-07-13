@@ -1,4 +1,4 @@
-# resin-ssh
+# docker-ssh
 
 [ssh](https://www.ssh.com/ssh/) docker images
 
@@ -32,7 +32,7 @@ docker run --name ssh \
 add public keys to `/root/.ssh/authorized_keys`
 
 ```bash
-# example
+# example - import keys from github
 curl -sSL https://github.com/{your-github-username}.keys >> /root/.ssh/authorized_keys
 ```
 
