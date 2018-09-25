@@ -8,7 +8,7 @@ LABEL build_date="${BUILD_DATE}"
 LABEL maintainer="kylemharding@gmail.com"
 
 # install openssh and tzdata
-RUN apk add --no-cache openssh tzdata
+RUN apk add --no-cache openssh tzdata curl
 
 # persist ssh data
 VOLUME /root/.ssh

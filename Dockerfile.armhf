@@ -11,7 +11,7 @@ LABEL maintainer="kylemharding@gmail.com"
 RUN [ "cross-build-start" ]
 
 # install openssh and tzdata
-RUN apk add --no-cache openssh tzdata
+RUN apk add --no-cache openssh tzdata curl
 
 # persist ssh data
 VOLUME /root/.ssh
